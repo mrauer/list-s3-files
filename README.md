@@ -2,7 +2,7 @@
 
 `List S3 Files` is a simple script to generate a single page clickable list of files from an S3 bucket.
 
-image here
+<img src="assets/list-s3-files.png"/>
 
 ## How to use this script?
 
