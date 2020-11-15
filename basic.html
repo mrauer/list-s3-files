@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      function loadXMLDoc() {
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+          xmlhttp = new XMLHttpRequest();
+        } else {
+          // code for older browsers
+          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        return xmlhttp
+      }
+      var http = loadXMLDoc();
+      function eventHandler(){
+        http.open('get', location.protocol+'//'+location.hostname);
+        http.onreadystatechange = filesHandler; 
+        http.send();
+      }
+      function filesHandler(){
+        ret = '';
+        files = new Array();
+        if(http.readyState == 4){
+            var response = http.responseXML;
+            contents = response.getElementsByTagName('Contents');
+            for(i=0; i<contents.length; i++){
+              data =new Array();
+              files[i] = data;
+              name = contents[i].getElementsByTagName('Key')[0].firstChild.data;
+              url = "<a href=\""+name+"\">"+name+"</a>";
+              data[0] = name;
+              data[3] = url;
+            }
+          files.sort();
+          for(i=0; i<files.length; i++){
+            data = files[i];
+            url = data[3];
+            ret = ret + url + "<br/>";
+          }
+          document.getElementById('s3_data').innerHTML = ret;
+        }
+      }
+    </script>
+  </head>
+  <body onLoad="eventHandler();">
+    <div id="s3_data"></div>
+  </body>
+</html>
